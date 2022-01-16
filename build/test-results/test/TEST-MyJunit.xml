@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="MyJunit" tests="1" skipped="0" failures="0" errors="0" timestamp="2022-01-16T15:11:28" hostname="DESKTOP-AEKCRH7" time="33.752">
+  <properties/>
+  <testcase name="selectDropdown" classname="MyJunit" time="33.752"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[SLF4J: Failed to load class "org.slf4j.impl.StaticLoggerBinder".
+SLF4J: Defaulting to no-operation (NOP) logger implementation
+SLF4J: See http://www.slf4j.org/codes.html#StaticLoggerBinder for further details.
+1642345889536	geckodriver	INFO	Listening on 127.0.0.1:63931
+1642345890381	mozrunner::runner	INFO	Running command: "C:\\Program Files\\Mozilla Firefox\\firefox.exe" "--marionette" "--headed" "--remote-debugging-port" "50969" "-no-remote" "-profile" "C:\\Users\\bri_6\\AppData\\Local\\Temp\\rust_mozprofileu3YY3D"
+1642345890680	Marionette	INFO	Marionette enabled
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new NotFoundError("Could not open the file at C:\\Users\\bri_6\\AppData\\Local\\Temp\\rust_mozprofileu3YY3D\\search.json.mozlz4", (void 0)))
+DevTools listening on ws://localhost:50969/devtools/browser/59790c8d-9841-4b0a-b862-51c0020e2291
+1642345892500	Marionette	INFO	Listening on port 61588
+1642345892548	RemoteAgent	WARN	TLS certificate errors will be ignored for this session
+Jan 16, 2022 9:11:32 PM org.openqa.selenium.remote.ProtocolHandshake createSession
+INFO: Detected dialect: W3C
+JavaScript warning: https://pagead2.googlesyndication.com/bg/s22cBc76vWepYNwqq7rK-TaORqePB7gQ6sezXyyrHgA.js line 1 > eval line 925 > eval line 1 > eval, line 1: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.
+]]></system-err>
+</testsuite>
