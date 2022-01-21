@@ -312,10 +312,10 @@ public class MyJunit {
         readFromExcel("C:\\", "Users\\bri_6\\OneDrive\\Desktop\\Selenium\\Selenium_Test.xls", "Sheet1");
     }
 
-    /*@After
+    @After
     public void closeBrowser() {
         driver.quit();
-    }*/
+    }
 
 }
 
