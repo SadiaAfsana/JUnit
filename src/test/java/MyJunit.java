@@ -1,11 +1,13 @@
+import org.apache.commons.io.FileUtils;
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import org.openqa.selenium.By;
-import org.openqa.selenium.Keys;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
+import org.openqa.selenium.*;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxOptions;
 import org.openqa.selenium.interactions.Actions;
@@ -13,11 +15,12 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.time.Duration;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 import static java.lang.Thread.sleep;
 
@@ -146,13 +149,13 @@ public class MyJunit {
         driver.findElement(By.id("simpleLink")).click();
         sleep(5000);
 
-        ArrayList<String> w = new ArrayList<String>(driver.getWindowHandles());
+        ArrayList<String> w = new ArrayList<>(driver.getWindowHandles());
         //switch to open tab
         driver.switchTo().window(w.get(1));
         System.out.println("New tab title: " + driver.getTitle());
         wait = new WebDriverWait(driver, Duration.ofSeconds(50));
-        WebElement imgElemet = wait.until(ExpectedConditions.elementToBeClickable(By.xpath(("//img[@src='/images/Toolsqa.jpg']"))));
-        Boolean status = imgElemet.isDisplayed();
+        WebElement imgElement = wait.until(ExpectedConditions.elementToBeClickable(By.xpath(("//img[@src='/images/Toolsqa.jpg']"))));
+        Boolean status = imgElement.isDisplayed();
         //Boolean status = driver.findElement(By.xpath("//img[@src='/images/Toolsqa.jpg']")).isDisplayed();
         Assert.assertEquals(true, status);
         driver.close();
@@ -238,6 +241,67 @@ public class MyJunit {
         Assert.assertTrue(text.contains("This is a sample page"));
         driver.switchTo().defaultContent();
 
+    }
+
+    @Test
+    public void mouseHover() throws InterruptedException {
+        driver.get("https://green.edu.bd/");
+        WebElement mainMenu = driver.findElement(By.xpath("//a[@class='dropdown-toggle'][contains(text(),'About Us')]"));
+        Actions actions = new Actions(driver);
+        actions.moveToElement(mainMenu).perform();
+        Thread.sleep(3000);
+        WebElement subMenu = driver.findElement(By.xpath("//li[@id='menu-item-325']//a[contains(text(),'History')]"));
+        actions.moveToElement(subMenu);
+        actions.click().build().perform();
+
+    }
+
+    @Test
+    public void keyboardEvents() throws InterruptedException {
+        driver.get("https://www.google.com/");
+        WebElement searchElement = driver.findElement(By.name("q"));
+        Actions action = new Actions(driver);
+        action.moveToElement(searchElement);
+        action.keyDown(Keys.SHIFT);
+        action.sendKeys("Selenium Webdriver").keyUp(Keys.SHIFT).doubleClick().contextClick().perform();
+
+        Thread.sleep(5000);
+    }
+
+    @Test
+    public void takeScreenshot() throws IOException {
+        driver.get("https://demoqa.com");
+        File screenshotFile = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
+        String time = new SimpleDateFormat("dd-MM-yyyy-hh-mm-ss-aa").format(new Date());
+        String fileWithPath = "./src/test/resources/screenshots/" + time + ".png";
+        File DestFile = new File(fileWithPath);
+        FileUtils.copyFile(screenshotFile, DestFile);
+
+    }
+
+    public static void readFromExcel(String filePath, String fileName, String sheetName) throws IOException {
+        File file = new File(filePath + "\\" + fileName);
+        FileInputStream inputStream = new FileInputStream(file);
+        Workbook workbook = null;
+        String fileExtensionName = fileName.substring(fileName.indexOf("."));
+        if (fileExtensionName.equals(".xls")) {
+            workbook = new HSSFWorkbook(inputStream);
+        }
+        Sheet sheet = workbook.getSheet(sheetName);
+        int rowCount = sheet.getLastRowNum() - sheet.getFirstRowNum();
+        for (int i = 0; i < rowCount + 1; i++) {
+            Row row = sheet.getRow(i);
+            for (int j = 0; j < row.getLastCellNum(); j++) {
+                System.out.print((row.getCell(j).getStringCellValue()) + "|| ");
+            }
+            System.out.println();
+
+        }
+    }
+
+    @Test
+    public void readData() throws IOException {
+        readFromExcel("C:\\", "Users\\bri_6\\OneDrive\\Desktop\\Selenium\\Selenium_Test.xls", "Sheet1");
     }
 
     @After
