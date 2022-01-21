@@ -83,7 +83,7 @@ public class MyJunit {
         driver.findElement(By.id("currentAddress")).sendKeys("Dhanmondi, Dhaka-1205");
         driver.findElement(By.id("permanentAddress")).sendKeys("Ghatail, Tangail");
         driver.findElement(By.id("submit")).sendKeys(Keys.CONTROL, Keys.END);
-        driver.findElement(By.id("submit")).click();
+        // driver.findElement(By.id("submit")).click();
     }
 
     @Test
@@ -144,11 +144,11 @@ public class MyJunit {
         Select select = new Select(driver.findElement(By.id("oldSelectMenu")));
         select.selectByValue("2");
 
-        Select cars = new Select(driver.findElement(By.id("cars")));
+       /* Select cars = new Select(driver.findElement(By.id("cars")));
         if (cars.isMultiple()) {
             cars.selectByValue("volvo");
             cars.selectByValue("audi");
-        }
+        }*/
     }
 
     @Test
@@ -197,9 +197,9 @@ public class MyJunit {
     public void modalDialog() {
 
         driver.get("https://demoqa.com/modal-dialogs");
-        WebElement element = wait.until(ExpectedConditions.elementToBeClickable(By.id("showSmallModal")));
-        //driver.findElement(By.id("showSmallModal")).click();
-        element.click();
+        //WebElement element = wait.until(ExpectedConditions.elementToBeClickable(By.id("showSmallModal")));
+        driver.findElement(By.id("showSmallModal")).click();
+        //element.click();
         driver.findElement(By.id("closeSmallModal")).click();
 
     }
