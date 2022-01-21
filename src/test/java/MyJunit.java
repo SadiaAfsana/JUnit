@@ -14,7 +14,10 @@ import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.time.Duration;
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 
 import static java.lang.Thread.sleep;
 
@@ -130,15 +133,117 @@ public class MyJunit {
         Select select = new Select(driver.findElement(By.id("oldSelectMenu")));
         select.selectByValue("2");
 
-       /* Select cars = new Select(driver.findElement(By.id("cars")));
+        Select cars = new Select(driver.findElement(By.id("cars")));
         if (cars.isMultiple()) {
             cars.selectByValue("volvo");
-            cars.selectByValue("audi");*/
+            cars.selectByValue("audi");
         }
-
-    @After
-    public void closeBrowser() {
-        driver.quit();
     }
 
+    @Test
+    public void handleNewTab() throws InterruptedException {
+        driver.get("https://demoqa.com/links");
+        driver.findElement(By.id("simpleLink")).click();
+        sleep(5000);
+
+        ArrayList<String> w = new ArrayList<String>(driver.getWindowHandles());
+        //switch to open tab
+        driver.switchTo().window(w.get(1));
+        System.out.println("New tab title: " + driver.getTitle());
+        wait = new WebDriverWait(driver, Duration.ofSeconds(50));
+        WebElement imgElemet = wait.until(ExpectedConditions.elementToBeClickable(By.xpath(("//img[@src='/images/Toolsqa.jpg']"))));
+        Boolean status = imgElemet.isDisplayed();
+        //Boolean status = driver.findElement(By.xpath("//img[@src='/images/Toolsqa.jpg']")).isDisplayed();
+        Assert.assertEquals(true, status);
+        driver.close();
+        driver.switchTo().window(w.get(0));
+    }
+
+    @Test
+    public void handleChildWindow() {
+        driver.get("https://demoqa.com/browser-windows");
+        // Thread.sleep(5000);
+        // WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(40));
+        // wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("windowButton")));
+        // wait.until(ExpectedConditions.elementToBeClickable(By.id("windowButton")));
+        driver.findElement(By.id(("windowButton"))).click();
+        String mainWindowHandle = driver.getWindowHandle();
+        Set<String> allWindowHandles = driver.getWindowHandles();
+        Iterator<String> iterator = allWindowHandles.iterator();
+
+        while (iterator.hasNext()) {
+            String ChildWindow = iterator.next();
+            if (!mainWindowHandle.equalsIgnoreCase(ChildWindow)) {
+                driver.switchTo().window(ChildWindow);
+                String text = driver.findElement(By.id("sampleHeading")).getText();
+                Assert.assertTrue(text.contains("This is a sample page"));
+            }
+
+        }
+    }
+
+    @Test
+    public void modalDialog() {
+
+        driver.get("https://demoqa.com/modal-dialogs");
+        WebElement element = wait.until(ExpectedConditions.elementToBeClickable(By.id("showSmallModal")));
+        //driver.findElement(By.id("showSmallModal")).click();
+        element.click();
+        driver.findElement(By.id("closeSmallModal")).click();
+
+    }
+
+    @Test
+    public void webTables(){
+        driver.get("https://demoqa.com/webtables");
+        driver.findElement(By.xpath("//span[@id='edit-record-1']//*[@stroke='currentColor']")).click();
+        driver.findElement(By.xpath("//input[@id='firstName']")).clear();
+        driver.findElement(By.xpath("//input[@id='firstName']")).sendKeys("Sadia Afsana");
+        driver.findElement(By.id("submit")).click();
+
+    }
+
+    @Test
+    public void scrapData(){
+        driver.get("https://demoqa.com/webtables");
+        WebElement table = driver.findElement(By.className("rt-tbody"));
+        List<WebElement> allRows = table.findElements(By.className("rt-tr"));
+        int i=0;
+        for (WebElement row : allRows) {
+            List<WebElement> cells = row.findElements(By.className("rt-td"));
+            for (WebElement cell : cells) {
+                i++;
+                System.out.println("num["+i+"] "+ cell.getText());
+
+            }
+        }
+    }
+
+    @Test
+    public void uploadImage(){
+        driver.get("https://demoqa.com/upload-download");
+        WebElement uploadElement = driver.findElement(By.id("uploadFile"));
+        uploadElement.sendKeys("C:\\Users\\bri_6\\OneDrive\\Desktop\\Image\\Rose.jpg");
+
+        String text= driver.findElement(By.id("uploadedFilePath")).getText();
+        Assert.assertTrue(text.contains("Rose.jpg"));
+    }
+
+    @Test
+    public void handleIframe(){
+        driver.get("https://demoqa.com/frames");
+        driver.switchTo().frame("frame2");
+        String text= driver.findElement(By.id("sampleHeading")).getText();
+        System.out.println(text);
+        Assert.assertTrue(text.contains("This is a sample page"));
+        driver.switchTo().defaultContent();
+
+    }
+
+     /*   @After
+        public void closeBrowser() {
+            driver.quit();
+        }*/
+
 }
+
