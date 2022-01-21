@@ -194,7 +194,7 @@ public class MyJunit {
     }
 
     @Test
-    public void webTables(){
+    public void webTables() {
         driver.get("https://demoqa.com/webtables");
         driver.findElement(By.xpath("//span[@id='edit-record-1']//*[@stroke='currentColor']")).click();
         driver.findElement(By.xpath("//input[@id='firstName']")).clear();
@@ -204,46 +204,46 @@ public class MyJunit {
     }
 
     @Test
-    public void scrapData(){
+    public void scrapData() {
         driver.get("https://demoqa.com/webtables");
         WebElement table = driver.findElement(By.className("rt-tbody"));
         List<WebElement> allRows = table.findElements(By.className("rt-tr"));
-        int i=0;
+        int i = 0;
         for (WebElement row : allRows) {
             List<WebElement> cells = row.findElements(By.className("rt-td"));
             for (WebElement cell : cells) {
                 i++;
-                System.out.println("num["+i+"] "+ cell.getText());
+                System.out.println("num[" + i + "] " + cell.getText());
 
             }
         }
     }
 
     @Test
-    public void uploadImage(){
+    public void uploadImage() {
         driver.get("https://demoqa.com/upload-download");
         WebElement uploadElement = driver.findElement(By.id("uploadFile"));
         uploadElement.sendKeys("C:\\Users\\bri_6\\OneDrive\\Desktop\\Image\\Rose.jpg");
 
-        String text= driver.findElement(By.id("uploadedFilePath")).getText();
+        String text = driver.findElement(By.id("uploadedFilePath")).getText();
         Assert.assertTrue(text.contains("Rose.jpg"));
     }
 
     @Test
-    public void handleIframe(){
+    public void handleIframe() {
         driver.get("https://demoqa.com/frames");
         driver.switchTo().frame("frame2");
-        String text= driver.findElement(By.id("sampleHeading")).getText();
+        String text = driver.findElement(By.id("sampleHeading")).getText();
         System.out.println(text);
         Assert.assertTrue(text.contains("This is a sample page"));
         driver.switchTo().defaultContent();
 
     }
 
-     /*   @After
-        public void closeBrowser() {
-            driver.quit();
-        }*/
+    @After
+    public void closeBrowser() {
+        driver.quit();
+    }
 
 }
 
