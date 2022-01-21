@@ -8,6 +8,8 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.openqa.selenium.*;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxOptions;
 import org.openqa.selenium.interactions.Actions;
@@ -31,6 +33,11 @@ public class MyJunit {
     @Before
     public void setup() {
         System.setProperty("webdriver.gecko.driver", "./src/test/resources/geckodriver.exe");
+        /*System.setProperty("webdriver.chrome.driver", "./src/test/resources/chromedriver.exe");
+        ChromeOptions chromeOptions = new ChromeOptions();
+        chromeOptions.addArguments("--headed");
+        driver = new ChromeDriver(chromeOptions);*/
+
         FirefoxOptions firefoxOptions = new FirefoxOptions();
         firefoxOptions.addArguments("--headed");
         driver = new FirefoxDriver(firefoxOptions);
@@ -75,6 +82,7 @@ public class MyJunit {
         driver.findElement(By.id("userEmail")).sendKeys("Sadia.Afsana@gmail.com");
         driver.findElement(By.id("currentAddress")).sendKeys("Dhanmondi, Dhaka-1205");
         driver.findElement(By.id("permanentAddress")).sendKeys("Ghatail, Tangail");
+        driver.findElement(By.id("submit")).sendKeys(Keys.CONTROL, Keys.END);
         driver.findElement(By.id("submit")).click();
     }
 
@@ -304,10 +312,10 @@ public class MyJunit {
         readFromExcel("C:\\", "Users\\bri_6\\OneDrive\\Desktop\\Selenium\\Selenium_Test.xls", "Sheet1");
     }
 
-    @After
+    /*@After
     public void closeBrowser() {
         driver.quit();
-    }
+    }*/
 
 }
 
