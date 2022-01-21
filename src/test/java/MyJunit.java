@@ -75,7 +75,7 @@ public class MyJunit {
         driver.findElement(By.id("userEmail")).sendKeys("Sadia.Afsana@gmail.com");
         driver.findElement(By.id("currentAddress")).sendKeys("Dhanmondi, Dhaka-1205");
         driver.findElement(By.id("permanentAddress")).sendKeys("Ghatail, Tangail");
-        //driver.findElement(By.id("submit")).click();
+        driver.findElement(By.id("submit")).click();
     }
 
     @Test
