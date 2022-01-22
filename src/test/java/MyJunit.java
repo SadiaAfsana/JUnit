@@ -262,6 +262,13 @@ public class MyJunit {
         actions.moveToElement(subMenu);
         actions.click().build().perform();
 
+        /*
+        driver.get("https://green.edu.bd/");
+        List<WebElement> mainMenu = driver.findElements(By.xpath("//a[contains(text(),'About Us')]"));
+        Actions actions = new Actions(driver);
+        actions.moveToElement(mainMenu.get(2)).perform();
+        Thread.sleep(3000);
+         */
     }
 
     @Test
