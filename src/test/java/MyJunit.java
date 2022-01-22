@@ -1,5 +1,6 @@
 import org.apache.commons.io.FileUtils;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.ss.usermodel.DataFormatter;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
@@ -307,7 +308,9 @@ public class MyJunit {
         for (int i = 0; i < rowCount + 1; i++) {
             Row row = sheet.getRow(i);
             for (int j = 0; j < row.getLastCellNum(); j++) {
-                System.out.print((row.getCell(j).getStringCellValue()) + "|| ");
+                DataFormatter formatter = new DataFormatter();
+                //System.out.print((row.getCell(j).getStringCellValue()) + "|| ");
+                System.out.print(formatter.formatCellValue(row.getCell(j)) + "|| ");
             }
             System.out.println();
 
