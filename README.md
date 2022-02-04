@@ -1,4 +1,4 @@
-# junit_demo_project
+# JUnit
 
 ```
 gradle clean test
